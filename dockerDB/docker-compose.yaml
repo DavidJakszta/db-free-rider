@@ -1,0 +1,79 @@
+###########################################################################
+# Build MySQL-v8.0 container running the 'mysqld' (d: daemon, MySQL server)
+# process listening at default port 3306 for incoming DB-connections.
+# \\
+# Image reference from Docker Hub (v8.0):
+#  - https://hub.docker.com/_/mysql
+#
+# Usage:
+#   docker-compose up -d      # build & start container (once)
+#   docker-compose stop       # stop running container
+#   docker-compose start      # restart container
+#
+# Connect:
+#   mysql --user=freerider --password=free.ride
+#   mysql --user=root --password=password
+#   mysqldump --user=root --password=password  FREERIDER_DB > db_dump_20200424.sql
+#
+version: '3.8'    # see [Docker-compose version v3.8] below
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: db-freerider_MySQL_Server
+    restart: always
+
+    environment:
+      MYSQL_DATABASE: 'FREERIDER_DB'
+      MYSQL_USER: 'freerider'
+      MYSQL_PASSWORD: 'free.ride'
+      MYSQL_ROOT_PASSWORD: 'password'
+      # MYSQL_ALLOW_EMPTY_PASSWORD: yes
+
+    ports:  # port-mapping: 'hostsystem port:mysqld-port inside container'
+      - '3306:3306'
+    expose:
+      - '3306'
+
+    # Mount path from host system to internal path to store DB-data in the
+    # host system outside(!) the container.
+    #  - Windows: enable file sharing, see [mount_volumes_on_Windows]
+    volumes:
+      - ./db.mnt:/mnt
+
+
+###########################################################################
+# Issues and supplemental information.
+#
+# [Docker-compose version v3.8]
+# Docker-compose v3.8 uses parameters available with Docker Engine > v19.03.0.
+# https://docs.docker.com/compose/compose-file/compose-versioning
+#
+# [mount_volumes_on_Windows]
+# on Windows: must enable file sharing for ./db.mnts directory
+#   - Docker for Windows: Settings -> Resources -> File sharing -> add path
+# https://stackoverflow.com/questions/41334021/volume-binding-using-docker-compose-on-windows
+#
+# [mysql client command]
+# Install (MySQL Workbench)[https://www.mysql.com/products/workbench]
+# and enable mysql client command by adding workbench path to $PATH.
+# export PATH="${PATH}:/c/Program Files/MySQL/MySQL Workbench 8.0 CE"
+#
+# [Docker compose specification]
+#   - https://docs.docker.com/compose/compose-file
+#
+# [Source]
+#   - https://medium.com/@chrischuck35/how-to-create-a-mysql-instance-with-docker-compose-1598f3cc1bee
+#
+# [compare MySQL 5.x and 8.x]
+#   - https://severalnines.com/blog/popular-docker-images-mysql-and-mariadb-server/
+#
+# [native_password]
+# problem: mysql 8 client does not support authentication protocol requested by server
+# solution: add mysql_native_password module to my.cnf
+# https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server
+# command: mysqld --default-authentication-plugin=mysql_native_password --init-file=/docker-entrypoint-initdb.d/db_schema.sql
+#   --character-set-server=utf8mb4
+#   --collation-server=utf8mb4_unicode_ci 
+#   --sql-mode=""
+#   --secure-file-priv=""

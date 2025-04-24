@@ -1,0 +1,4 @@
+SELECT * FROM CUSTOMER
+ where ID = 52 OR ID = 58;
+
+

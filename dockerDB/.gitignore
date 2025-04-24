@@ -1,0 +1,12 @@
+# .gitignore
+
+# mysqld database files
+db.mnt/db_data/**
+!db.mnt/db_data/.touch
+
+# mysqld log files
+db.mnt/db_logs/**
+!db.mnt/db_logs/.touch
+
+# content files
+db.mnt/init_freerider_schema_2.sql
