@@ -3,14 +3,11 @@ package de.freerider.data_jdbc;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-
-import de.freerider.datamodel.Reservation;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import de.freerider.datamodel.Reservation;
 
 
 /**
@@ -37,14 +34,16 @@ class JDBC_QueryRunner {
     /**
      * Vehicle DAO.
      */
-    // @Autowired requires implementation class of DataAccessVehicles interface
+    @Autowired
     private DataAccessVehicles vehicle_dao;
 
 
     /**
      * Method is called by Spring Container after container is ready.
      */
-    @EventListener(ApplicationReadyEvent.class)
+    // @org.springframework.context.event.EventListener(
+    //     org.springframework.boot.context.event.ApplicationReadyEvent.class
+    // )
     public void runQueries() {
         //
         logger.info("--> JDBC QueryRunner");

@@ -25,7 +25,30 @@ logging:
   pattern:
     console: "%msg%n"         # use short format
   level:
-    root: ERROR               # disable Spring Boot logs
+    root: INFO               # disable Spring Boot logs
     '[de.freerider]': INFO    # allow application-level INFO logs
     '[org.springframework.jdbc.core]': TRACE  # log SQL statements
+    '[org.springframework.web]': TRACE  # log SQL statements
+    '[org.apache.tomcat]': INFO
+    web: TRACE
 
+
+# tomcat server port configuration
+#
+server:
+  port : 8080
+
+
+# springdoc/swagger configuration
+#
+springdoc:
+  writer-with-order-by-keys: true   # keep API order on apidoc-site
+
+
+# enable to read api docs from static file: api-docs.yaml
+#   swagger-ui:
+#     url: /api-docs.yaml   # read from file rather than generate
+#     enabled: true
+#   api-docs:
+#     path: /v3/api-docs
+#     enabled: true

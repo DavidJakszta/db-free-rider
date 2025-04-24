@@ -42,6 +42,14 @@ public final class Vehicle {
      * ...more attributes
      * 
      */
+    private int seats;
+
+    private Category category;
+
+    private Power power;
+
+    private Status status;
+
 
 
     /**
@@ -134,7 +142,9 @@ public final class Vehicle {
      * 
      * @return number of seats in Vehicle.
      */
-    // public int getSeats() { }
+    public int getSeats() { 
+        return seats;
+    }
 
 
     /**
@@ -142,7 +152,9 @@ public final class Vehicle {
      * 
      * @return category of Vehicle.
      */
-    // public Category getCategory() { }
+    public Category getCategory() { 
+        return category;
+    }
 
 
     /**
@@ -150,7 +162,9 @@ public final class Vehicle {
      * 
      * @return power source of Vehicle.
      */
-    // public Power getPower() { }
+    public Power getPower() { 
+        return power;
+    }
 
 
     /**
@@ -158,7 +172,9 @@ public final class Vehicle {
      * 
      * @return status of Vehicle.
      */
-    // public Status getStatus() { }
+    public Status getStatus() { 
+        return status;
+    }
 
 
     /**
@@ -168,6 +184,11 @@ public final class Vehicle {
      * @return chainable self-reference.
      * @throws IllegalArgumentException for illegal status parameter.
      */
-    // public Vehicle setStatus(Status status) { }
-
+    public Vehicle setStatus(Status status) { 
+        // if(status != Vehicle.Status.Active || status != Vehicle.Status.Serviced || status != Vehicle.Status.Terminated )
+        if(status==null)
+			throw new IllegalArgumentException("Wrong Status");
+        this.status = status;
+	    return this;
+    }
 }

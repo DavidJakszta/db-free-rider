@@ -42,7 +42,7 @@
 
     <!-- The properties section defines variables used in pom.xml. -->
     <properties>
-        <java.version>19</java.version>
+        <java.version>18</java.version>
         <skipTests>false</skipTests>    <!-- skip running tests -->
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -76,7 +76,29 @@
              - spring-boot-starter-jdbc     # Spring JDBC package
              - mysql-connector-java         # MySQL database connector
         -->
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
         <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jdbc</artifactId>

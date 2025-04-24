@@ -58,7 +58,8 @@ public class FreeriderApplication {
         // start Spring Container, wait until ready.
         SpringApplication.run(FreeriderApplication.class, args);
         //
-        logger.info("\n(3.) Spring Container exited.");
+        // logger.info("\n(3.) Spring Container exited.");
+        logger.info("\nTomcat waiting for HTTP-requests...");
     }
 
 

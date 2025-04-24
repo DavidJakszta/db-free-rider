@@ -4,22 +4,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-
 /**
  * Public interface of a factory that creates objects for datamodel classes <T>.
- * 
+ *
  * Factory create() methods return type Optional<T> that only contain objects
  * of type T when valid objects could be created from valid parameters.
  * Otherwise, the returned Optional is empty.
- * 
+ *
  * @author sgra64
  */
 public interface DataFactory {
 
-
     /**
      * Create new Customer object from parameters.
-     * 
+     *
      * @param id unique identifier, PRIMARY KEY in database.
      * @param name Customer name (as single String).
      * @param contacts Customer contact information.
@@ -28,10 +26,9 @@ public interface DataFactory {
      */
     Optional<Customer> createCustomer(long id, String name, String contacts, String status);
 
-
     /**
      * Create new Vehicle object from parameters.
-     * 
+     *
      * @param id unique identifier, PRIMARY KEY in database.
      * @param make brand name of Vehicle, e.g. "VW" or "Tesla"
      * @param model model name of Vehicle, e.g. "ID.4"
@@ -42,14 +39,12 @@ public interface DataFactory {
      * @return Optional with object or empty when no object could be created from parameters.
      */
     Optional<Vehicle> createVehicle(
-        long id, String make, String model, int seats,
-        String category, String power, String status
-    );
-
+            long id, String make, String model, int seats,
+            String category, String power, String status);
 
     /**
      * Create new Reservation object from parameters.
-     * 
+     *
      * @param id unique identifier, PRIMARY KEY in database.
      * @param customer reference to Customer, FOREIGN KEY relation in database.
      * @param vehicle reference to Vehicle, FOREIGN KEY relation in database.
@@ -61,16 +56,14 @@ public interface DataFactory {
      * @return Optional with object or empty when no object could be created from parameters.
      */
     Optional<Reservation> createReservation(
-        long id, long customer_id, long vehicle_id,
-        String begin, String end, String pickup, String dropoff, String status
-    );
-
+            long id, long customer_id, long vehicle_id,
+            String begin, String end, String pickup, String dropoff, String status);
 
     /**
      * Generic method to create list of objects of type <T> from list of arguments.
      * Invalid arguments are logged as errors and prevent object creation (dropped
      * from resulting list).
-     * 
+     *
      * Example use:
      * <pre>
      * final Object[][] customerArgs = {
@@ -87,15 +80,14 @@ public interface DataFactory {
      *         (String)args[3]                  // status
      * ));
      * </pre>
-     * 
+     *
      * @param collector to collect created objects of type <T> (null will create collector).
      * @param args array of arguments passed in order to create(...) function.
      * @param creator lambda callout passing args to create each object.
      * @return created objects of type <T>.
      */
     <T> Iterable<T> create(
-        List<T> collector, Object[][] args,
-        Function<Object[], Optional<T>>creator
-    );
+            List<T> collector, Object[][] args,
+            Function<Object[], Optional<T>> creator);
 
 }

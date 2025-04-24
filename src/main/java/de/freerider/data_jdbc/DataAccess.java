@@ -1,5 +1,6 @@
 package de.freerider.data_jdbc;
 
+import java.util.Map;
 import java.util.Optional;
 
 import de.freerider.datamodel.Customer;
@@ -81,5 +82,59 @@ public interface DataAccess {
      * @return number of elements.
      */
     <T> long count(Iterable<T> iter);
+
+
+    /**
+     * Attempt to INSERT new record into CUSTOMER table from attributes
+     * provided by name-value pairs, e.g.:
+     * <pre>
+     * [
+     *   "id": 1,
+     *   "name": "Meyer, Eric",
+     *   "contact": "eme22@gmail.com",
+     *   "status", "Active"
+     * ]
+     * </pre>
+     * If customer data could be inserted into the database, a Customer
+     * object is returned. An exception is thrown otherwise with error
+     * code: 400 bad request (invalid attributes), 409 conflict (id exists).
+     * 
+     * @param map name-value pairs of Customer data.
+     * @return created Customer object.
+     * @throws DataAccessException with error code (400 bad request, 409 conflict).
+     */
+    Customer createCustomer(Map<String, Object> map) throws DataAccessException;
+
+
+    /**
+     * Attempt to UPDATE existing record into CUSTOMER table from attributes
+     * provided by name-value pairs, e.g.:
+     * <pre>
+     * [
+     *   "id": 1,                               <-- must be present
+     *   "contact": "pojo388@supermail.com",    <-- updated data element
+     * ]
+     * </pre>
+     * The update Customer object is returned with success. An exception is
+     * thrown otherwise with error code: 400 bad request (invalid attributes),
+     * 404 not found (id not found).
+     * 
+     * @param map name-value pairs of Customer data.
+     * @return true if customer was updated sucessfully.
+     * @throws DataAccessException with error code (400 bad request, 404 not found).
+     */
+    boolean updateCustomer(Map<String, Object> map) throws DataAccessException;
+
+
+    /**
+     * Delete Customer record with id from CUSTOMER table. An exception is
+     * thrown with error code: 404 not found (id not found), 409 conflict
+     * (foreign key violation).
+     * 
+     * @param id Customer id.
+     * @return true if customer was deleted sucessfully.
+     * @throws DataAccessException with error code (404 not found, 409 conflict).
+     */
+    boolean deleteCustomer(long id) throws DataAccessException;
 
 }
